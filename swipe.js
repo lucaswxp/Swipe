@@ -33,6 +33,7 @@ function Swipe(container, options) {
   var index = parseInt(options.startSlide, 10) || 0;
   var speed = options.speed || 300;
   options.continuous = options.continuous !== undefined ? options.continuous : true;
+  options.auto = options.auto || 0;
 
   function setup() {
 
@@ -173,18 +174,18 @@ function Swipe(container, options) {
   }
 
   // setup auto slideshow
-  var delay = options.auto || 0;
+  var delay = options.auto;
   var interval;
 
   function begin() {
-
+    delay = options.auto; // restore delay setting
     interval = setTimeout(next, delay);
 
   }
 
   function stop() {
 
-    delay = 0;
+    delay = 0; // reset delay setting
     clearTimeout(interval);
 
   }
@@ -396,6 +397,9 @@ function Swipe(container, options) {
 
       setup();
 
+    },
+    begin: function(){
+      begin();
     },
     slide: function(to, speed) {
       
